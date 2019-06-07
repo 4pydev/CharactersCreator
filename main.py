@@ -3,8 +3,8 @@ from faker import Faker
 from file_operations import render_template
 
 
-template_file = 'charsheet.svg'
-letters_mapping = {
+TEMPLATE_FILE = 'charsheet.svg'
+LETTERS_MAPPING = {
     'а': 'а͠', 'б': 'б̋', 'в': 'в͒͠',
     'г': 'г͒͠', 'д': 'д̋', 'е': 'е͠',
     'ё': 'ё͒͠', 'ж': 'ж͒', 'з': 'з̋̋͠',
@@ -29,7 +29,7 @@ letters_mapping = {
     'Э': 'Э͒͠͠', 'Ю': 'Ю̋͠', 'Я': 'Я̋',
     ' ': ' '
 }
-skills_list = [
+SKILLS_LIST = [
     'Стремительный прыжок',
     'Электрический выстрел',
     'Ледяной удар',
@@ -37,16 +37,17 @@ skills_list = [
     'Кислотный взгляд',
     'Тайный побег',
     'Ледяной выстрел',
-    'Огненный заряд'
+    'Огненный заряд',
 ]
+NUMBER_OF_GAMERS = 10
 
 
 def get_character_skills():
     runic_skills = []
-    for skill in skills_list:
+    for skill in SKILLS_LIST:
         runic_skill = skill
         for char in runic_skill:
-            runic_skill = runic_skill.replace(char, letters_mapping[char])
+            runic_skill = runic_skill.replace(char, LETTERS_MAPPING[char])
 
         runic_skills.append(runic_skill)
 
@@ -76,14 +77,17 @@ def get_character_data():
 
 
 def get_character_form(form_filename, character_data):
-    render_template(template_file, form_filename, character_data)
+    render_template(TEMPLATE_FILE, form_filename, character_data)
 
 
-if __name__ == '__main__':
-    number_of_gamers = 10
-    for i in range(number_of_gamers):
+def main():
+    for i in range(NUMBER_OF_GAMERS):
         filename = './characters/charsheet-{}.svg'.format(i)
         get_character_form(
             form_filename=filename,
             character_data=get_character_data()
         )
+
+
+if __name__ == '__main__':
+    main()
